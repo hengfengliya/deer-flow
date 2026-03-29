@@ -277,7 +277,7 @@ def make_lead_agent(config: RunnableConfig):
 
     cfg = config.get("configurable", {})
 
-    thinking_enabled = cfg.get("thinking_enabled", True)
+    thinking_enabled = cfg.get("thinking_enabled", False)
     reasoning_effort = cfg.get("reasoning_effort", None)
     requested_model_name: str | None = cfg.get("model_name") or cfg.get("model")
     is_plan_mode = cfg.get("is_plan_mode", False)

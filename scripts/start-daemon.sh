@@ -73,7 +73,7 @@ trap cleanup_on_failure INT TERM
 mkdir -p logs
 
 echo "Starting LangGraph server..."
-nohup sh -c 'cd backend && NO_COLOR=1 uv run langgraph dev --no-browser --allow-blocking --no-reload > ../logs/langgraph.log 2>&1' &
+nohup sh -c 'cd backend && PYTHONPATH=.:packages/harness NO_COLOR=1 uv run langgraph dev --no-browser --allow-blocking --no-reload > ../logs/langgraph.log 2>&1' &
 ./scripts/wait-for-port.sh 2024 60 "LangGraph" || {
     echo "✗ LangGraph failed to start. Last log output:"
     tail -60 logs/langgraph.log
@@ -87,7 +87,7 @@ nohup sh -c 'cd backend && NO_COLOR=1 uv run langgraph dev --no-browser --allow-
 echo "✓ LangGraph server started on localhost:2024"
 
 echo "Starting Gateway API..."
-nohup sh -c 'cd backend && PYTHONPATH=. uv run uvicorn app.gateway.app:app --host 0.0.0.0 --port 8001 > ../logs/gateway.log 2>&1' &
+nohup sh -c 'cd backend && PYTHONPATH=.:packages/harness uv run uvicorn app.gateway.app:app --host 0.0.0.0 --port 8001 > ../logs/gateway.log 2>&1' &
 ./scripts/wait-for-port.sh 8001 30 "Gateway API" || {
     echo "✗ Gateway API failed to start. Last log output:"
     tail -60 logs/gateway.log
