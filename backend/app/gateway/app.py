@@ -21,6 +21,7 @@ from app.gateway.routers import (
     channel_connections,
     channels,
     console,
+    cx_auth,
     features,
     feedback,
     github_webhooks,
@@ -701,6 +702,7 @@ This gateway provides runtime endpoints for agent runs plus custom endpoints for
 
     # Auth API is mounted at /api/v1/auth
     app.include_router(auth.router)
+    app.include_router(cx_auth.router)
 
     # Feedback API is mounted at /api/threads/{thread_id}/runs/{run_id}/feedback
     app.include_router(feedback.router)
