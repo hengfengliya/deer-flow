@@ -29,6 +29,9 @@ logger = logging.getLogger(__name__)
 
 _RETRIABLE_STATUS_CODES = {408, 409, 425, 429, 500, 502, 503, 504}
 _BUSY_PATTERNS = (
+    # CX carry-patch: sub2api (Responses API 中继) 偶发返回空流，LangChain 抛
+    # ValueError("No generations found in stream.")——上游瞬时抖动，应按 busy 重试。
+    "no generations found in stream",
     "server busy",
     "temporarily unavailable",
     "try again later",
